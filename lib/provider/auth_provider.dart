@@ -49,9 +49,6 @@ class AuthenticationProvider with ChangeNotifier {
       return true;
     } on FirebaseAuthException catch (e) {
       setError(e.code.toString().toUpperCase());
-      print(e.toString());
-      print(e.message.toString());
-      print(e.code.toString());
       if (e.code == 'weak-password') {
         setError('The password provided is too weak.');
         debugPrint('The password provided is too weak.');
@@ -63,7 +60,6 @@ class AuthenticationProvider with ChangeNotifier {
       return false;
     } catch (e) {
       setLoading(false);
-      print(e.toString());
       return false;
     }
   }

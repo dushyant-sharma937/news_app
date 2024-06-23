@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/provider/auth_provider.dart';
 import 'package:newsapp/provider/comments_provider.dart';
+import 'package:newsapp/utils/widgets.dart';
 import 'package:provider/provider.dart';
 import 'comments_screen.dart';
 
@@ -132,7 +133,7 @@ class SignupScreenState extends State<SignupScreen> {
       builder: (context, authProvider, state) {
         return authProvider.isLoading
             ? const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
+                body: CustomLoadigIndicator(),
               )
             : Scaffold(
                 appBar: AppBar(
@@ -153,56 +154,19 @@ class SignupScreenState extends State<SignupScreen> {
                             isLogin ? _signin(context) : _signup(context);
                           }
                         },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child: Text(
-                              isLogin ? 'Login' : 'Signup',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ),
-                        ),
+                        child: CustomButton(isLogin: isLogin),
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (isLogin)
-                            Text(
-                              "New Here? ",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          if (!isLogin)
-                            Text(
-                              "Already have an account? ",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isLogin = !isLogin;
-                                _passwordController.clear();
-                                _emailController.clear();
-                                _nameController.clear();
-                              });
-                            },
-                            child: Text(
-                              isLogin ? 'Signup' : 'Login',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                            ),
-                          ),
-                        ],
+                      LoginToSignupText(
+                        isLogin: isLogin,
+                        onPressed: () {
+                          setState(() {
+                            isLogin = !isLogin;
+                            _passwordController.clear();
+                            _emailController.clear();
+                            _nameController.clear();
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -269,23 +233,6 @@ class SignupScreenState extends State<SignupScreen> {
                 ),
               );
       },
-    );
-  }
-
-  InputDecoration inputDecorationCustom(BuildContext context, String label) {
-    return InputDecoration(
-      labelText: label,
-      labelStyle: Theme.of(context).textTheme.bodyMedium,
-      fillColor: Colors.white,
-      filled: true,
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
     );
   }
 }

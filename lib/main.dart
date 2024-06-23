@@ -6,6 +6,7 @@ import 'package:newsapp/provider/comments_provider.dart';
 import 'package:newsapp/provider/auth_provider.dart';
 import 'package:newsapp/screens/comments_screen.dart';
 import 'package:newsapp/screens/signup_screen.dart';
+import 'package:newsapp/utils/widgets.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CommentsProvider()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'News App',
         theme: ThemeData(
           scaffoldBackgroundColor: const Color(0xFFF5F9FD),
@@ -73,9 +75,7 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
+                body: CustomLoadigIndicator(),
               );
             } else {
               if (snapshot.hasData) {
